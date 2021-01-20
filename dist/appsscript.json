@@ -1,0 +1,14 @@
+{
+  "timeZone": "Europe/Paris",
+  "dependencies": {
+  },
+  "webapp": {
+    "access": "MYSELF",
+    "executeAs": "USER_ACCESSING"
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "executionApi": {
+    "access": "MYSELF"
+  },
+  "runtimeVersion": "V8"
+}
