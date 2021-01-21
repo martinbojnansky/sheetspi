@@ -17,7 +17,7 @@ module.exports = {
   },
   output: {
     filename: 'api.bundle.js',
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'var',
     library: 'api'
   },

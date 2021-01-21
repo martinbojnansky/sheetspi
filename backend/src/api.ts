@@ -1,5 +1,7 @@
 export default {
   doGet: (e: any) => {
-    return HtmlService.createHtmlOutputFromFile('index');
+    return ContentService
+      .createTextOutput(JSON.stringify({ response: 'Hello, world!' }))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
