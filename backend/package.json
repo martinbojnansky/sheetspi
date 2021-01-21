@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "deploy": "webpack & clasp deploy -i AKfycbyJi98UoOmUVzRDbiRwmirVG7Y_i98FTb2diaRXKB6QESqDhYIJnUx5_ihiiTysM0wnfg -d dev"
   },
   "keywords": [],
   "author": "",
