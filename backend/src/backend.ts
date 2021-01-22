@@ -1,20 +1,11 @@
 import { api, ApiAction } from '../../api';
+import { Controller, controllers } from './controllers';
 
 export default {
-  handleRequest: (body: any) => {
-    let request, response;
-
+  handleRequest: (body: string) => {
     const action = JSON.parse(body) as ApiAction<unknown>;
-
-    switch (action.name as keyof typeof api) {
-
-      case 'sayHi':
-        request = action.payload as typeof api.sayHi.requestType;
-        response = api.sayHi.response({ greeting: `Hello, ${request.name}! It's ${new Date().toString()}` })
-        break;
-
-    }
-
+    const reducer: Controller<unknown> = controllers[action.name as keyof typeof api];
+    const response = reducer(action);
     return JSON.stringify(response);
   }
 }

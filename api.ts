@@ -13,16 +13,13 @@ const createResponse = <TPayload>(payload?: TPayload): TPayload => ({
 });
 
 const createAction = <TRequest, TResponse>(name: string) => ({
-  requestType: <TRequest>{},
-  responseType: <TResponse>{},
   request: (req: TRequest) => createRequest(name, req),
-  response: (res: TResponse) => createResponse(res)
+  payloadType: <TRequest>{},
+  response: (res: TResponse) => createResponse(res),
+  responseType: <TResponse>{}
 });
 
-// ** Define API actions here ** //
-
+// API definition goes here. //
 export const api = {
-
-  sayHi: createAction<{ name: string }, { greeting: string }>('sayHi')
-
+  sayHi: createAction<{ name: string }, { greeting: string }>('sayHi'),
 }
