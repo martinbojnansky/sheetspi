@@ -17,5 +17,5 @@ export class SpreadsheetRepository<T> implements Repository<T> {
 }
 
 export const repositories = {
-  logs: () => new SpreadsheetRepository<any>('1KQ_V8pdqrELD2o01xEY4wvaEPYBcdpvVMLouMJXh3HY', 'logs')
+  logs: (): Repository<string> => new SpreadsheetRepository<string>('1KQ_V8pdqrELD2o01xEY4wvaEPYBcdpvVMLouMJXh3HY', 'logs')
 }
