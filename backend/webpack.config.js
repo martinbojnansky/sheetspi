@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './src/api.ts',
+  entry: './src/backend.ts',
   module: {
     rules: [
       {
@@ -16,9 +16,9 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   output: {
-    filename: 'api.bundle.js',
+    filename: 'backend.bundle.js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'var',
-    library: 'api'
+    library: 'backend'
   },
 };

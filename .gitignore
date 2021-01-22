@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-backend/dist/api.bundle.js
+backend/dist/backend.bundle.js
 
 # dependencies
 **/node_modules
