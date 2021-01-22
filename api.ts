@@ -19,7 +19,7 @@ const createAction = <TRequest, TResponse>(name: string) => ({
   responseType: <TResponse>{}
 });
 
-// API definition goes here. //
 export const api = {
   sayHi: createAction<{ name: string }, { greeting: string }>('sayHi'),
+  getLogs: createAction<{}, { values: any[][] }>('getLogs')
 }

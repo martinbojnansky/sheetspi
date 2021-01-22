@@ -13,12 +13,22 @@ export class AppComponent {
 
   constructor(protected httpClient: HttpClient) { }
 
-  post() {
+  sayHi() {
     this.httpClient.post('https://script.google.com/macros/s/AKfycbwC4dGDqixRvXo7JlJMa2A3HZVQO3ZwL3LfUh485yksoLvTx2Pdy9vo/exec',
       JSON.stringify(api.sayHi.request({ name: 'Angular' }))
     ).subscribe({
       next: (data: typeof api.sayHi.responseType) => {
         this.result = data.greeting
+      }
+    });
+  }
+
+  getLogs() {
+    this.httpClient.post('https://script.google.com/macros/s/AKfycbwC4dGDqixRvXo7JlJMa2A3HZVQO3ZwL3LfUh485yksoLvTx2Pdy9vo/exec',
+      JSON.stringify(api.getLogs.request({}))
+    ).subscribe({
+      next: (data: typeof api.getLogs.responseType) => {
+        this.result = JSON.stringify(data.values)
       }
     });
   }
