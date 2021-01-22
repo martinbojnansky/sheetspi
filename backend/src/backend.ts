@@ -1,21 +1,20 @@
-import { api } from '../../api';
+import { api, ApiAction } from '../../api';
 
 export default {
-  doPost: (e: any) => {
+  handleRequest: (body: any) => {
     let request, response;
 
-    // https://developers.google.com/apps-script/guides/web#request_parameters
-    const body = JSON.parse(e.postData.contents);
+    const action = JSON.parse(body) as ApiAction<unknown>;
 
-    switch (body.action as keyof typeof api) {
+    switch (action.name as keyof typeof api) {
 
       case 'sayHi':
-        request = body.payload as typeof api.sayHi.requestType;
+        request = action.payload as typeof api.sayHi.requestType;
         response = api.sayHi.response({ greeting: `Hello, ${request.name}! It's ${new Date().toString()}` })
         break;
 
     }
 
-    return ContentService.createTextOutput(JSON.stringify(response)).setMimeType(ContentService.MimeType.JSON);
+    return JSON.stringify(response);
   }
 }

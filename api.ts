@@ -1,24 +1,28 @@
-const createRequest = <TPayload>(action: string, payload?: TPayload) => ({
-  action: action,
+export interface ApiAction<TPayload> {
+  name: string,
+  payload: TPayload
+}
+
+const createRequest = <TPayload>(name: string, payload?: TPayload): ApiAction<TPayload> => ({
+  name: name,
   payload: payload
 });
 
-const createResponse = <TPayload>(action: string, payload?: TPayload) => ({
-  action: action,
-  payload: payload
+const createResponse = <TPayload>(payload?: TPayload): TPayload => ({
+  ...payload
 });
 
-const createAction = <TRequest, TResponse>(action: string) => ({
+const createAction = <TRequest, TResponse>(name: string) => ({
   requestType: <TRequest>{},
   responseType: <TResponse>{},
-  request: (req: TRequest) => createRequest(action, req),
-  response: (res: TResponse) => createResponse(action, res)
+  request: (req: TRequest) => createRequest(name, req),
+  response: (res: TResponse) => createResponse(res)
 });
 
 // ** Define API actions here ** //
 
 export const api = {
 
-  sayHi: createAction<{ name: string }, { greeting: string }>('sayHi'),
+  sayHi: createAction<{ name: string }, { greeting: string }>('sayHi')
 
 }
