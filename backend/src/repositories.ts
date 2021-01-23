@@ -1,5 +1,6 @@
 export interface Repository<T> {
   getAll: () => T[][];
+  update: (id: string, values: any[]) => any[];
 }
 
 export class SpreadsheetRepository<T> implements Repository<T> {
@@ -14,6 +15,17 @@ export class SpreadsheetRepository<T> implements Repository<T> {
   getAll = (): T[][] => {
     return this.sheet.getDataRange().getValues();
   };
+
+  update = (id: string, values: any[]) => {
+    const row = this.getRowById(id);
+    row.setValues([[...values]]);
+    return row.getValues();
+  }
+
+  protected getRowById(id: string) {
+    const index = this.sheet.getRange('A:A').createTextFinder(id).findNext().getRowIndex();
+    return this.sheet.getRange(`A${index}:B${index}`);
+  }
 }
 
 export const repositories = {
