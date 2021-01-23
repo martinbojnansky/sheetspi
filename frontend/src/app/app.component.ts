@@ -32,4 +32,12 @@ export class AppComponent {
       }
     });
   }
+
+  firestore() {
+    this.httpClient.get('https://script.google.com/macros/s/AKfycbwC4dGDqixRvXo7JlJMa2A3HZVQO3ZwL3LfUh485yksoLvTx2Pdy9vo/exec').subscribe({
+      next: (data) => {
+        this.result = JSON.stringify(data)
+      }
+    });
+  }
 }
