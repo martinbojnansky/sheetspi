@@ -1,4 +1,4 @@
-import { api, ApiAction } from '../../api';
+import { api, ApiAction } from '../../api/api';
 import { Controller, controllers } from './controllers';
 
 export default {

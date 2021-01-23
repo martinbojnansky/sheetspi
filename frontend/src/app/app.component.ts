@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { api } from '../../../api';
+import { Observable } from 'rxjs';
+import { api, ApiAction } from '../../../api/api';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,8 @@ export class AppComponent {
   constructor(protected httpClient: HttpClient) { }
 
   sayHi() {
-    this.httpClient.post('https://script.google.com/macros/s/AKfycbwC4dGDqixRvXo7JlJMa2A3HZVQO3ZwL3LfUh485yksoLvTx2Pdy9vo/exec',
-      JSON.stringify(api.sayHi.request({ name: 'Angular' }))
+    this.request(
+      api.sayHi.request({ name: 'Angular' })
     ).subscribe({
       next: (data: typeof api.sayHi.responseType) => {
         this.result = data.greeting
@@ -24,11 +25,11 @@ export class AppComponent {
   }
 
   getLogs() {
-    this.httpClient.post('https://script.google.com/macros/s/AKfycbwC4dGDqixRvXo7JlJMa2A3HZVQO3ZwL3LfUh485yksoLvTx2Pdy9vo/exec',
-      JSON.stringify(api.getLogs.request({}))
+    this.request(
+      api.getLogs.request({ skip: 2, top: 4 })
     ).subscribe({
       next: (data: typeof api.getLogs.responseType) => {
-        this.result = JSON.stringify(data.values)
+        this.result = JSON.stringify(data)
       }
     });
   }
@@ -39,5 +40,11 @@ export class AppComponent {
         this.result = JSON.stringify(data)
       }
     });
+  }
+
+  private request<T>(action: ApiAction<T>): Observable<unknown> {
+    return this.httpClient.post('https://script.google.com/macros/s/AKfycbwC4dGDqixRvXo7JlJMa2A3HZVQO3ZwL3LfUh485yksoLvTx2Pdy9vo/exec',
+      JSON.stringify(action)
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { api, ApiAction } from "../../api";
+import { api, ApiAction } from "../../api/api";
 import * as moment from "moment";
 import { repositories } from "./repositories";
 
@@ -9,7 +9,7 @@ const sayHiController = (action: ApiAction<typeof api.sayHi.payloadType>) => {
 }
 
 const getLogsController = (action: ApiAction<typeof api.getLogs.payloadType>) => {
-  return api.getLogs.response({ values: repositories.logs().getAll() });
+  return api.getLogs.response(repositories.logs().getAll(action.payload));
 }
 
 export const controllers: { [key in keyof typeof api]: () => Controller<unknown> } = {
