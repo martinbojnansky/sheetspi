@@ -1,10 +1,11 @@
 import { api, ApiAction } from "../../api";
+import * as moment from "moment";
 import { repositories } from "./repositories";
 
 export type Controller<TPayload> = (action: ApiAction<TPayload>) => unknown;
 
 const sayHiController = (action: ApiAction<typeof api.sayHi.payloadType>) => {
-  return api.sayHi.response({ greeting: `Hello, ${action.payload.name}! It's ${new Date().toString()}` });
+  return api.sayHi.response({ greeting: `Hello, ${action.payload.name}! It's ${moment(moment.now()).format('HH:MM:ss')}` });
 }
 
 const getLogsController = (action: ApiAction<typeof api.getLogs.payloadType>) => {

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "deploy": "webpack & clasp push & clasp deploy -i AKfycbwC4dGDqixRvXo7JlJMa2A3HZVQO3ZwL3LfUh485yksoLvTx2Pdy9vo -d dev"
   },
   "keywords": [],
@@ -16,6 +17,7 @@
     "webpack-cli": "^4.4.0"
   },
   "dependencies": {
-    "@types/google-apps-script": "^1.0.21"
+    "@types/google-apps-script": "^1.0.21",
+    "moment": "^2.29.1"
   }
 }
