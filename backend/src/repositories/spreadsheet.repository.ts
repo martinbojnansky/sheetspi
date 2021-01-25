@@ -9,7 +9,7 @@ export class SpreadsheetRepository<T> implements Repository<T> {
   constructor(spreadsheetId: string, sheetName: string) {
     this.spreadsheet = SpreadsheetApp.openById(spreadsheetId);
     this.sheet = this.spreadsheet.getSheetByName(sheetName);
-    this.headers = this.sheet.getSheetValues(1, 1, 1, this.sheet.getMaxColumns())[0];
+    this.headers = this.getRowAt(1);
   }
 
   getAll = (query: TableQuery): T[] => {
@@ -18,13 +18,11 @@ export class SpreadsheetRepository<T> implements Repository<T> {
     return items;
   };
 
-  protected getAllRows(query: TableQuery) {
-    // Maybe the best way to filter out soft deleted items would be changing named
-    // range after add or delete.
-    // this.spreadsheet.setNamedRange();
-    // this.spreadsheet.removeNamedRange()
-    // this.sheet.deleteRow();
+  getById = (id: number): T => {
+    return this.mapFromRow(this.getRowAt(id));
+  }
 
+  protected getAllRows(query: TableQuery) {
     let rows = this.sheet.getDataRange().getValues();
     // Remove headers row.
     rows.shift();
@@ -42,5 +40,9 @@ export class SpreadsheetRepository<T> implements Repository<T> {
       item[name] = values[index]
     });
     return item as T;
+  }
+
+  protected getRowAt(index: number): any[] {
+    return this.sheet.getSheetValues(index, 1, 1, this.sheet.getMaxColumns())[0];
   }
 }

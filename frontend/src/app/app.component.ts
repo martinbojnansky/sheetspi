@@ -34,6 +34,16 @@ export class AppComponent {
     });
   }
 
+  getLog() {
+    this.request(
+      api.getLog.request(4)
+    ).subscribe({
+      next: (data: typeof api.getLog.responseType) => {
+        this.result = JSON.stringify(data)
+      }
+    });
+  }
+
   firestore() {
     this.httpClient.get('https://script.google.com/macros/s/AKfycbwC4dGDqixRvXo7JlJMa2A3HZVQO3ZwL3LfUh485yksoLvTx2Pdy9vo/exec').subscribe({
       next: (data) => {

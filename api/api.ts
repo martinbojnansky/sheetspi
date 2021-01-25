@@ -23,5 +23,6 @@ const createAction = <TRequest, TResponse>(name: string) => ({
 
 export const api = {
   sayHi: createAction<{ name: string }, { greeting: string }>('sayHi'),
-  getLogs: createAction<TableQuery, Log[]>('getLogs')
+  getLogs: createAction<TableQuery, Log[]>('getLogs'),
+  getLog: createAction<number, Log>('getLog')
 }
