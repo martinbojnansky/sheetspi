@@ -1,8 +1,5 @@
-import { Log, TableQuery } from "../../api/models";
-
-export interface Repository<T> {
-  getAll: (query: TableQuery) => T[];
-}
+import { TableQuery } from "../../../api/models";
+import { Repository } from "../framework/models";
 
 export class SpreadsheetRepository<T> implements Repository<T> {
   protected readonly spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet;
@@ -22,14 +19,18 @@ export class SpreadsheetRepository<T> implements Repository<T> {
   };
 
   protected getAllRows(query: TableQuery) {
-    let rows = this.sheet.getDataRange().getValues();
+    // Maybe the best way to filter out soft deleted items would be changing named
+    // range after add or delete.
+    // this.spreadsheet.setNamedRange();
+    // this.spreadsheet.removeNamedRange()
+    // this.sheet.deleteRow();
 
+    let rows = this.sheet.getDataRange().getValues();
     // Remove headers row.
     rows.shift();
-
     // Apply paging info.
     const start = query?.skip ? query.skip : 0;
-    const end = start + (query?.top ? query.top : 0);
+    const end = start ? start + (query?.top ? query.top : 0) : undefined;
     rows = rows.slice(start, end);
 
     return rows;
@@ -42,8 +43,4 @@ export class SpreadsheetRepository<T> implements Repository<T> {
     });
     return item as T;
   }
-}
-
-export const repositories = {
-  logs: (): Repository<Log> => new SpreadsheetRepository<Log>('1KQ_V8pdqrELD2o01xEY4wvaEPYBcdpvVMLouMJXh3HY', 'logs')
 }
