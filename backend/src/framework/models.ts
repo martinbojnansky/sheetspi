@@ -7,4 +7,5 @@ export interface Repository<T> {
   getAll: (query: TableQuery) => T[];
   getById: (id: string) => T;
   create: (item: T) => T;
+  delete: (id: string) => void;
 }

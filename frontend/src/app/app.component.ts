@@ -54,6 +54,16 @@ export class AppComponent {
     });
   }
 
+  deleteLog() {
+    this.request(
+      api.deleteLog.request(prompt('Input id of the item to delete'))
+    ).subscribe({
+      next: (data: typeof api.deleteLog.responseType) => {
+        this.result = 'deleted'
+      }
+    });
+  }
+
   firestore() {
     this.httpClient.get('https://script.google.com/macros/s/AKfycbwC4dGDqixRvXo7JlJMa2A3HZVQO3ZwL3LfUh485yksoLvTx2Pdy9vo/exec').subscribe({
       next: (data) => {

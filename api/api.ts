@@ -25,5 +25,6 @@ export const api = {
   sayHi: createAction<{ name: string }, { greeting: string }>('sayHi'),
   getLogs: createAction<TableQuery, Log[]>('getLogs'),
   getLog: createAction<string, Log>('getLog'),
-  createLog: createAction<LogCreateDTO, Log>('createLog')
+  createLog: createAction<LogCreateDTO, Log>('createLog'),
+  deleteLog: createAction<string, void>('deleteLog')
 }

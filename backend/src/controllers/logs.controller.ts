@@ -13,3 +13,7 @@ export const getLogController: Controller<typeof api.getLog.payloadType> = (acti
 export const createLogController: Controller<typeof api.createLog.payloadType> = (action) => {
   return api.createLog.response(repositories.logs().create({ id: null, message: action.payload.message, dateCreated: new Date() }));
 }
+
+export const deleteLogController: Controller<typeof api.deleteLog.payloadType> = (action) => {
+  return api.deleteLog.response(repositories.logs().delete(action.payload));
+}

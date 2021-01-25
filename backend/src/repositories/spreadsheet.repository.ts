@@ -30,6 +30,10 @@ export class SpreadsheetRepository<T> implements Repository<T> {
     return this.getById(id);
   }
 
+  delete = (id: string) => {
+    this.sheet.deleteRow(this.getRowIndexById(id));
+  }
+
   protected getAllRows(query: TableQuery) {
     let rows = this.sheet.getDataRange().getValues();
     // Remove headers row.
@@ -63,10 +67,12 @@ export class SpreadsheetRepository<T> implements Repository<T> {
     return this.sheet.getSheetValues(index, 1, 1, this.sheet.getMaxColumns())[0];
   }
 
-  protected getRowById(id: string, searchFrom: number = 0): any[] {
-    return this.getRowAt(
-      this.sheet.getRange(1, 1, this.sheet.getMaxRows(), this.sheet.getMaxColumns())
-        .createTextFinder(id).matchEntireCell(true).findPrevious().getRowIndex()
-    );
+  protected getRowById(id: string): any[] {
+    return this.getRowAt(this.getRowIndexById(id));
+  }
+
+  protected getRowIndexById(id: string): number {
+    return this.sheet.getRange(1, 1, this.sheet.getMaxRows(), this.sheet.getMaxColumns())
+      .createTextFinder(id).matchEntireCell(true).findPrevious().getRowIndex();
   }
 }
