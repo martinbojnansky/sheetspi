@@ -1,5 +1,6 @@
 import { TableQuery } from "../../../api/models";
 import { Repository } from "../framework/models";
+import { uuid } from "../framework/tools/uuid";
 
 export class SpreadsheetRepository<T> implements Repository<T> {
   protected readonly spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet;
@@ -18,8 +19,15 @@ export class SpreadsheetRepository<T> implements Repository<T> {
     return items;
   };
 
-  getById = (id: number): T => {
-    return this.mapFromRow(this.getRowAt(id));
+  getById = (id: string): T => {
+    return this.mapFromRow(this.getRowById(id));
+  }
+
+  create = (item: T): T => {
+    const row = this.mapToRow(item);
+    const id = row[0] = uuid();
+    this.spreadsheet.appendRow(row);
+    return this.getById(id);
   }
 
   protected getAllRows(query: TableQuery) {
@@ -42,7 +50,23 @@ export class SpreadsheetRepository<T> implements Repository<T> {
     return item as T;
   }
 
+  protected mapToRow(item: Partial<T>): any[] {
+    const row: any[] = [];
+    this.headers.forEach((header, index) => {
+      const columnValue = item[header as keyof T];
+      row.push(columnValue || '')
+    });
+    return row;
+  }
+
   protected getRowAt(index: number): any[] {
     return this.sheet.getSheetValues(index, 1, 1, this.sheet.getMaxColumns())[0];
+  }
+
+  protected getRowById(id: string, searchFrom: number = 0): any[] {
+    return this.getRowAt(
+      this.sheet.getRange(1, 1, this.sheet.getMaxRows(), this.sheet.getMaxColumns())
+        .createTextFinder(id).matchEntireCell(true).findPrevious().getRowIndex()
+    );
   }
 }

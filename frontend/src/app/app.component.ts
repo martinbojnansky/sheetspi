@@ -36,9 +36,19 @@ export class AppComponent {
 
   getLog() {
     this.request(
-      api.getLog.request(4)
+      api.getLog.request('4')
     ).subscribe({
       next: (data: typeof api.getLog.responseType) => {
+        this.result = JSON.stringify(data)
+      }
+    });
+  }
+
+  createLog() {
+    this.request(
+      api.createLog.request({ message: new Date().getMilliseconds().toString() })
+    ).subscribe({
+      next: (data: typeof api.createLog.responseType) => {
         this.result = JSON.stringify(data)
       }
     });

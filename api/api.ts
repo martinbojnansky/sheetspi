@@ -1,4 +1,4 @@
-import { Log, TableQuery } from './models';
+import { Log, LogCreateDTO, TableQuery } from './models';
 
 export interface ApiAction<TPayload> {
   name: string,
@@ -24,5 +24,6 @@ const createAction = <TRequest, TResponse>(name: string) => ({
 export const api = {
   sayHi: createAction<{ name: string }, { greeting: string }>('sayHi'),
   getLogs: createAction<TableQuery, Log[]>('getLogs'),
-  getLog: createAction<number, Log>('getLog')
+  getLog: createAction<string, Log>('getLog'),
+  createLog: createAction<LogCreateDTO, Log>('createLog')
 }

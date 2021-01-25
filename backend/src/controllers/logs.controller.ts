@@ -9,3 +9,7 @@ export const getLogsController: Controller<typeof api.getLogs.payloadType> = (ac
 export const getLogController: Controller<typeof api.getLog.payloadType> = (action) => {
   return api.getLog.response(repositories.logs().getById(action.payload));
 }
+
+export const createLogController: Controller<typeof api.createLog.payloadType> = (action) => {
+  return api.createLog.response(repositories.logs().create({ id: null, message: action.payload.message, dateCreated: new Date() }));
+}

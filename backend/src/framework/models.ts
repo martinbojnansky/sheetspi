@@ -5,5 +5,6 @@ export type Controller<TPayload> = (action: ApiAction<TPayload>) => unknown;
 
 export interface Repository<T> {
   getAll: (query: TableQuery) => T[];
-  getById: (id: number) => T;
+  getById: (id: string) => T;
+  create: (item: T) => T;
 }

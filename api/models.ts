@@ -4,7 +4,11 @@ export interface TableQuery {
 }
 
 export interface Log {
-  id: number,
+  id: string,
   message: string,
   dateCreated: Date
+}
+
+export interface LogCreateDTO extends Partial<Log> {
+  message: string
 }
